@@ -1,0 +1,9 @@
+<net.rptools.maptool.model.Asset xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1" t:render="asset">
+  <id>
+    <id><t:slot name="id"/></id>
+  </id>
+  <name><t:slot name="name"/></name>
+  <extension><t:slot name="extension"/></extension>
+  <type>image</type>
+  <image/>
+</net.rptools.maptool.model.Asset>

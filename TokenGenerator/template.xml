@@ -1,0 +1,118 @@
+<net.rptools.maptool.model.Token xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1" t:render="fillSlots">
+  <id>
+    <baGUID t:render="tokenUID"></baGUID>
+  </id>
+  <beingImpersonated>false</beingImpersonated>
+  <imageAssetMap>
+    <entry>
+      <null/>
+      <net.rptools.lib.MD5Key>
+        <id t:render="image"></id>
+      </net.rptools.lib.MD5Key>
+    </entry>
+  </imageAssetMap>
+  <x><t:slot name="X"/></x>
+  <y><t:slot name="Y"/></y>
+  <z>1</z>
+  <anchorX>0</anchorX>
+  <anchorY>0</anchorY>
+  <sizeScale>1.0</sizeScale>
+  <lastX><t:slot name="X"/></lastX>
+  <lastY><t:slot name="Y"/></lastY>
+  <lastPath>
+    <cellList class="linked-list">
+      <net.rptools.maptool.model.CellPoint>
+        <x>9</x>
+        <y>5</y>
+        <g>0.0</g>
+        <distanceTraveled>0.0</distanceTraveled>
+        <distanceTraveledWithoutTerrain>0.0</distanceTraveledWithoutTerrain>
+      </net.rptools.maptool.model.CellPoint>
+    </cellList>
+    <waypointList class="linked-list">
+      <net.rptools.maptool.model.CellPoint>
+        <x>9</x>
+        <y>5</y>
+        <g>0.0</g>
+        <distanceTraveled>0.0</distanceTraveled>
+        <distanceTraveledWithoutTerrain>0.0</distanceTraveledWithoutTerrain>
+      </net.rptools.maptool.model.CellPoint>
+    </waypointList>
+  </lastPath>
+  <snapToScale>true</snapToScale>
+  <width>315</width>
+  <height>419</height>
+  <isoWidth>0</isoWidth>
+  <isoHeight>0</isoHeight>
+  <scaleX>1.0</scaleX>
+  <scaleY>1.0</scaleY>
+  <sizeMap>
+    <entry>
+      <java-class>net.rptools.maptool.model.SquareGrid</java-class>
+      <net.rptools.maptool.model.GUID>
+        <baGUID t:render="tokenUID"></baGUID>
+      </net.rptools.maptool.model.GUID>
+    </entry>
+  </sizeMap>
+  <snapToGrid>true</snapToGrid>
+  <isVisible>true</isVisible>
+  <visibleOnlyToOwner>false</visibleOnlyToOwner>
+  <vblColorSensitivity>-1</vblColorSensitivity>
+  <alwaysVisibleTolerance>2</alwaysVisibleTolerance>
+  <isAlwaysVisible>false</isAlwaysVisible>
+  <name><t:slot name="name"/></name>
+  <ownerType>0</ownerType>
+  <tokenShape>TOP_DOWN</tokenShape>
+  <tokenType>NPC</tokenType>
+  <layer>TOKEN</layer>
+  <propertyType>Basic</propertyType>
+  <tokenOpacity>1.0</tokenOpacity>
+  <terrainModifier>0.0</terrainModifier>
+  <terrainModifierOperation>NONE</terrainModifierOperation>
+  <terrainModifiersIgnored>
+    <net.rptools.maptool.model.Token_-TerrainModifierOperation>NONE</net.rptools.maptool.model.Token_-TerrainModifierOperation>
+  </terrainModifiersIgnored>
+  <isFlippedX>false</isFlippedX>
+  <isFlippedY>false</isFlippedY>
+  <hasSight>false</hasSight>
+  <state/>
+  <propertyMapCI>
+    <store/>
+  </propertyMapCI>
+  <macroPropertiesMap>
+    <entry t:render="macroList">
+      <int t:render="macroInt"></int>
+      <net.rptools.maptool.model.MacroButtonProperties t:render="macroProperties">
+        <macroUUID><t:slot name="macroUUID"/></macroUUID>
+        <saveLocation>Token</saveLocation>
+        <index t:render="macroInt">1</index>
+        <colorKey>default</colorKey>
+        <hotKey>None</hotKey>
+        <command t:render="macroText"></command>
+        <label><t:slot name="macroLabel"/></label>
+        <group></group>
+        <sortby></sortby>
+        <autoExecute><t:slot name="autoExecute"/></autoExecute>
+        <includeLabel>false</includeLabel>
+        <applyToTokens><t:slot name="applyToTokens"/></applyToTokens>
+        <fontColorKey>black</fontColorKey>
+        <fontSize>1.00em</fontSize>
+        <minWidth></minWidth>
+        <maxWidth></maxWidth>
+        <allowPlayerEdits><t:slot name="allowPlayerEdits"/></allowPlayerEdits>
+        <toolTip></toolTip>
+        <displayHotKey>true</displayHotKey>
+        <commonMacro>false</commonMacro>
+        <compareGroup>true</compareGroup>
+        <compareSortPrefix>true</compareSortPrefix>
+        <compareCommand>true</compareCommand>
+        <compareIncludeLabel>true</compareIncludeLabel>
+        <compareAutoExecute>true</compareAutoExecute>
+        <compareApplyToSelectedTokens>true</compareApplyToSelectedTokens>
+      </net.rptools.maptool.model.MacroButtonProperties>
+    </entry>
+  </macroPropertiesMap>
+  <speechMap/>
+  <notes t:render="notes">
+  </notes>
+</net.rptools.maptool.model.Token>
