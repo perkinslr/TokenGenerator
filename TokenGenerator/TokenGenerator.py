@@ -131,7 +131,7 @@ def GenerateTokens(inp, outp):
         for lib in libs.children():
             img = findImg(lib)
             token = MTToken(img=img,
-                            name = lib.basename(),
+                            name = 'Lib:' + lib.basename(),
                             idx = next(idx)
                             )
             for child in lib.children():
