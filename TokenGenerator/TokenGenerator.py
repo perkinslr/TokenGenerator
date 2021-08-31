@@ -96,8 +96,8 @@ class MTMacro(Element):
     @renderer
     def macroProperties(self, request, tag):
         tag.fillSlots(macroUUID=str(uuid4()),
-                      autoExecute='false',
-                      applyToTokens='false',
+                      autoExecute='true',
+                      applyToTokens='true',
                       allowPlayerEdits='false',
                       macroLabel=self.macro.basename()[:-4]
                       )
