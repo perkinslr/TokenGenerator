@@ -33,7 +33,7 @@ def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
                                 token.macros.append(MTMacro(c, next(midx), group = child.basename()))
 
                 print(token)
-                token.serialize(outp.child(lib.basename()))
+                token.serialize(outp.child(inp.basename()+'-'+lib.basename()))
         js = inp.child("JS")
         if js.exists():
             for file in js.children():
@@ -53,7 +53,7 @@ def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
                     print(settings)
                     if settings['executeOnLoad'].lower() == 'true':
                         autoLoadJS.append(jsFragment.name)
-                    jsFragment.serialize(outp.child(lib.basename()))
+                    jsFragment.serialize(outp.child(inp.basename()+'-JS-'+file.basename()[:-3]))
     if autoLoadJS:
         autoLoadJS.sort()
         jsLoader = MTToken(img = findImg(inp),
