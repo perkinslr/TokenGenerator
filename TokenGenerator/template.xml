@@ -90,17 +90,17 @@
         <hotKey>None</hotKey>
         <command t:render="macroText"></command>
         <label><t:slot name="macroLabel"/></label>
-        <group></group>
+        <group><t:slot name="group"/></group>
         <sortby></sortby>
         <autoExecute><t:slot name="autoExecute"/></autoExecute>
-        <includeLabel>false</includeLabel>
+        <includeLabel><t:slot name="includeLabel"/></includeLabel>
         <applyToTokens><t:slot name="applyToTokens"/></applyToTokens>
-        <fontColorKey>black</fontColorKey>
-        <fontSize>1.00em</fontSize>
-        <minWidth></minWidth>
-        <maxWidth></maxWidth>
+        <fontColorKey><t:slot name="fontColor"/></fontColorKey>
+        <fontSize><t:slot name="fontSize"/>em</fontSize>
+        <minWidth><t:slot name="minWidth"/></minWidth>
+        <maxWidth><t:slot name="maxWidth"/></maxWidth>
         <allowPlayerEdits><t:slot name="allowPlayerEdits"/></allowPlayerEdits>
-        <toolTip></toolTip>
+        <toolTip><t:slot name="toolTip"/></toolTip>
         <displayHotKey>true</displayHotKey>
         <commonMacro>false</commonMacro>
         <compareGroup>true</compareGroup>
