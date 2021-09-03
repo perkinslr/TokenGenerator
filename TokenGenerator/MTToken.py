@@ -63,7 +63,8 @@ class MTToken(Element):
 
     @renderer
     def notes(self, request, tag):
-        return tag(self.javascript)
+        return tag("\n"+html.escape(self.javascript).replace('&#x27;', "&apos;"))
+        
 
     def serialize(self, op: FilePath):
         assets: FilePath = op.child("assets")
