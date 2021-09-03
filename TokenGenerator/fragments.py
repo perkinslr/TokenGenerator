@@ -7,11 +7,32 @@ FETCHER = """
 [r: js.eval("return getJS(JSON.parse(args[0])[0])", macro.args)]
 """
 
-LOADER = """
+LOADER = r"""
 [h: defineFunction("js.load", "loadjs@"+getMacroLocation())]
 [h: js.eval("
 	this.jsTokenMap = {};
-	this.getJS = function(name) {return jsTokenMap['JS:'+name].getNotes()};
+	this.getJS = function(name) {
+            let notes = jsTokenMap['JS:'+name].getNotes();
+            if (notes.indexOf('/////') > -1) {
+                header = notes.split('/////')[0];
+                for (let line of header.split('\\n')) {
+                    if (line.indexOf('=') > -1) {
+                        let key, val
+                        [key, val] = line.split('=');
+                        if (key.trim() == 'dependencies') {
+                            for (let dep of val.trim().split(' ')) {
+                                if (dep.indexOf(':') < 0) {
+                                    dep = name.split(':')[0] + ':' + dep
+                                }
+                                console.log('Chain loading ' + dep)
+                                notes = getJS(dep) + '\\n\\n' + notes;
+                            }
+                        }
+                    }
+                }
+            }
+            return notes;
+        };
 	let autoLoadTokens = ['$autoLoadTokens'];
 	let tokens = MapTool.tokens.getMapTokens();
 	let to_process = {};
@@ -33,6 +54,7 @@ LOADER = """
 	for (let tokenName of autoLoadTokens) {
 		let token = to_process[tokenName];
 		try {
+			console.log('Loading ' + token.getName());
 			eval(token.getNotes());
 		}
 		catch (e) {

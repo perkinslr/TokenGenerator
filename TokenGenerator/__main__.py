@@ -23,8 +23,9 @@ def makeTokens(generate_zip, input_path, output_path):
     if generate_zip:
         cwd = os.getcwd()
         for dir in outp.children():
-            os.chdir(dir.path)
-            os.system(f"zip -r {dir.siblingExtension('.rptok').path} ./*")
+            if dir.isdir():
+                os.chdir(dir.path)
+                os.system(f"zip -r {dir.siblingExtension('.rptok').path} ./*")
 
 
 makeTokens(sys.argv[1:], "python -m TokenGenerator")
