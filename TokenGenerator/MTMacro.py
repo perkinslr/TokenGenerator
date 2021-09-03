@@ -8,7 +8,7 @@ import html
 from itertools import chain, count
 from uuid import uuid4
 from .utils import md5f
-from .fragments import SHIM, LOADER
+from . import fragments
 
 
 @attr.attributes(auto_attribs=True)
@@ -72,11 +72,11 @@ class MTMacro(Element):
 
 @attr.attributes(auto_attribs=True)
 class JSAutoLoader(MTMacro):
-    shim: bool = True
-    toProcess: list = None
+    target: str = "SHIM"
+    toProcess: list = ()
     @property
     def header(self):
         return ""
     @property
     def body(self):
-        return SHIM if self.shim else (LOADER.replace('$autoLoadTokens', str.join("', '",self.toProcess)))
+        return getattr(fragments, self.target).replace('$autoLoadTokens', str.join("', '",self.toProcess))

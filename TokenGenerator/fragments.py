@@ -3,8 +3,15 @@ SHIM = """
 [h: execLink(link,1)]
 """
 
+FETCHER = """
+[r: js.eval("return getJS(JSON.parse(args[0])[0])", macro.args)]
+"""
+
 LOADER = """
+[h: defineFunction("js.load", "loadjs@"+getMacroLocation())]
 [h: js.eval("
+	this.jsTokenMap = {};
+	this.getJS = function(name) {return jsTokenMap['JS:'+name].getNotes()};
 	let autoLoadTokens = ['$autoLoadTokens'];
 	let tokens = MapTool.tokens.getMapTokens();
 	let to_process = {};
@@ -17,6 +24,9 @@ LOADER = """
 			}
 			to_process[token.getName()] = token;
 			cnt++;
+		}
+		if (token.getName().startsWith('JS:')) {
+			jsTokenMap[token.getName()] = token;		
 		}
 	}
 	console.log('Executing '+cnt+' javascript macros')

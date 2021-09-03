@@ -59,7 +59,8 @@ def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
         jsLoader = MTToken(img = findImg(inp),
                            name = "Lib:AutoLoadJS",
                            idx = next(idx))
-        jsLoader.macros.append(JSAutoLoader(shim=True, idx=0, macro=FilePath("onCampaignLoad.mts")))
-        jsLoader.macros.append(JSAutoLoader(shim=False, idx=1, macro=FilePath("deferredCalls.mts"), toProcess=autoLoadJS))
+        jsLoader.macros.append(JSAutoLoader(target='SHIM', idx=0, macro=FilePath("onCampaignLoad.mts")))
+        jsLoader.macros.append(JSAutoLoader(target='LOADER', idx=1, macro=FilePath("deferredCalls.mts"), toProcess=autoLoadJS))
+        jsLoader.macros.append(JSAutoLoader(target='FETCHER', idx=2, macro=FilePath("loadjs.mts")))
         jsLoader.serialize(outp.child("AutoLoadJS"))
 
