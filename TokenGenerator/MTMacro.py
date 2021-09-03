@@ -8,6 +8,7 @@ import html
 from itertools import chain, count
 from uuid import uuid4
 from .utils import md5f
+from .fragments import SHIM, LOADER
 
 
 @attr.attributes(auto_attribs=True)
@@ -68,3 +69,14 @@ class MTMacro(Element):
     @renderer
     def macroInt(self, request, tag):
         return tag(str(self.idx+1))
+
+@attr.attributes(auto_attribs=True)
+class JSAutoLoader(MTMacro):
+    shim: bool = True
+    toProcess: list = None
+    @property
+    def header(self):
+        return ""
+    @property
+    def body(self):
+        return SHIM if self.shim else (LOADER.replace('$autoLoadTokens', str.join("', '",self.toProcess)))
