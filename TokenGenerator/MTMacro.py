@@ -17,6 +17,8 @@ class MTMacro(Element):
     idx: int
     loader: TagLoader = None
     group: str = ""
+    lib: FilePath = None
+    UDFList = {}
 
     @property
     def header(self):
@@ -45,7 +47,8 @@ class MTMacro(Element):
                       fontSize="1.00",
                       minWidth="",
                       maxWidth="",
-                      toolTip=""
+                      toolTip="",
+                      makeUDF=""
 
                       )
                       
@@ -60,6 +63,8 @@ class MTMacro(Element):
                       macroLabel=self.macro.basename()[:-4],
                       **params
                       )
+        if params['makeUDF']:
+            self.UDFList[self.macro.basename()[:-4]+'@'+'Lib:'+self.lib.basename()] = params['makeUDF']
         return tag
 
     @renderer
@@ -71,7 +76,7 @@ class MTMacro(Element):
         return tag(str(self.idx+1))
 
 @attr.attributes(auto_attribs=True)
-class JSAutoLoader(MTMacro):
+class AutoLoader(MTMacro):
     target: str = "SHIM"
     toProcess: list = ()
     @property
@@ -79,4 +84,20 @@ class JSAutoLoader(MTMacro):
         return ""
     @property
     def body(self):
+        if self.target == 'UDFLOADER':
+            udfs = []
+            for target, UDF in self.UDFList.items():
+                funcname, ignoreOutput, newScope = UDF.split(':')
+                udfs.append(fragments.UDFLOADER.replace(
+                    '$FUNCNAME', funcname.strip()
+                ).replace(
+                    '$TARGET', target.strip()
+                ).replace(
+                    '$DISCARD', ignoreOutput.strip()
+                ).replace(
+                    '$NEWSCOPE', newScope.strip()
+                ))
+            return str.join("\n", udfs)
         return getattr(fragments, self.target).replace('$autoLoadTokens', str.join("', '",self.toProcess))
+
+    

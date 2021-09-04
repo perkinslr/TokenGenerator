@@ -7,6 +7,10 @@ FETCHER = """
 [r: js.eval("return getJS(JSON.parse(args[0])[0])", macro.args)]
 """
 
+UDFLOADER = r"""
+    [h: defineFunction('$FUNCNAME', '$TARGET', $DISCARD, $NEWSCOPE)]
+"""
+
 LOADER = r"""
 [h: defineFunction("js.load", "loadjs@"+getMacroLocation())]
 [h: js.eval("

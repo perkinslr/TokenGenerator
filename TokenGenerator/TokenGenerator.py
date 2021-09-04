@@ -7,7 +7,7 @@ from itertools import chain, count
 from uuid import uuid4
 from .utils import md5f, findImg
 from .MTToken import MTToken
-from .MTMacro import MTMacro, JSAutoLoader
+from .MTMacro import MTMacro, AutoLoader
 
 
 def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
@@ -30,9 +30,7 @@ def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
                     elif child.isdir():
                         for c in child.children():
                             if c.splitext()[1] == '.mts':
-                                token.macros.append(MTMacro(c, next(midx), group = child.basename()))
-
-                print(token)
+                                token.macros.append(MTMacro(c, next(midx), lib=lib, group = child.basename()))
                 token.serialize(outp.child(inp.basename()+'-'+lib.basename()))
         js = inp.child("JS")
         if js.exists():
@@ -59,8 +57,16 @@ def GenerateTokens(inps: [FilePath, ...], outp: FilePath):
         jsLoader = MTToken(img = findImg(inp),
                            name = "Lib:AutoLoadJS",
                            idx = next(idx))
-        jsLoader.macros.append(JSAutoLoader(target='SHIM', idx=0, macro=FilePath("onCampaignLoad.mts")))
-        jsLoader.macros.append(JSAutoLoader(target='LOADER', idx=1, macro=FilePath("deferredCalls.mts"), toProcess=autoLoadJS))
-        jsLoader.macros.append(JSAutoLoader(target='FETCHER', idx=2, macro=FilePath("loadjs.mts")))
+        jsLoader.macros.append(AutoLoader(target='SHIM', idx=0, macro=FilePath("onCampaignLoad.mts")))
+        jsLoader.macros.append(AutoLoader(target='LOADER', idx=1, macro=FilePath("deferredCalls.mts"), toProcess=autoLoadJS))
+        jsLoader.macros.append(AutoLoader(target='FETCHER', idx=2, macro=FilePath("loadjs.mts")))
         jsLoader.serialize(outp.child("AutoLoadJS"))
 
+    if MTMacro.UDFList:
+        udfLoader = MTToken(img = findImg(inp),
+                            name = "Lib:AutoLoadUDF",
+                            idx = next(idx))
+        udfLoader.macros.append(AutoLoader(target='SHIM', idx=0, macro=FilePath("onCampaignLoad.mts")))
+        udfLoader.macros.append(AutoLoader(target='UDFLOADER', idx=1, macro=FilePath("deferredCalls.mts")))
+        udfLoader.serialize(outp.child("AutoLoadUDF"))
+        
